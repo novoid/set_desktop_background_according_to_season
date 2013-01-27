@@ -1,4 +1,4 @@
-## Time-stamp: <2013-01-27 17:25:20 vk>
+## Time-stamp: <2013-01-27 17:33:20 vk>
 ## -*- coding: utf-8 -*-
 ## This file is best viewed with GNU Emacs Org-mode: http://orgmode.org/
 
@@ -9,28 +9,28 @@ the current season.
 
 *DISCLAINER:* This is a works-for-me-solution which is adopted to my
 work flows and my computer. It works on a Mac OS X 10.5 with Python
-2.7 ( from [[https://www.macports.org/][MacPorts]]) and some tools installed form [[https://www.macports.org/][MacPorts]]. Sorry,
-you have to go through the whole script in order to modify it that it
-meets your situation.
+version 2.7 (from [[https://www.macports.org/][MacPorts]]) and some tools installed form
+[[https://www.macports.org/][MacPorts]]. Sorry, you have to go through the whole script in order to
+modify it that it meets your situation.
 
 What it does:
 
-1. get system idle time
-   - using shell script with ioreg
-2. if idle time is less than IDLE_TIME_BORDER minutes continue (else exit)
-3. re-generate FILE_WITH_IMAGEFILES if it is older than
-   REGENERATE_FILE_WITH_IMAGEFILES_NOT_WITHIN hours
-4. determine current month
-5. read-in FILE_WITH_IMAGEFILES from LIST_OF_PATHS_TO_QUERY and parse
-   for ISO timestamps in filenames
-6. randomly choose a file with matching month from the list
-   - use +/- one month as period to match season
-7. set this file as new desktop background
+- get system idle time
+  - using shell script with ioreg
+- if idle time is less than IDLE_TIME_BORDER minutes continue (else exit)
+- re-generate FILE_WITH_IMAGEFILES if it is older than
+  REGENERATE_FILE_WITH_IMAGEFILES_NOT_WITHIN hours
+- determine current month
+- read-in FILE_WITH_IMAGEFILES from LIST_OF_PATHS_TO_QUERY and parse
+  for ISO timestamps in filenames
+- randomly choose a file with matching month from the list
+  - use +/- one month as period to match season
+- set this file as new desktop background
 
 ** Why
 
 Let's face it: This is nothing most people spend a thought on. I did
-it because I can :-)
+it because I can and it was fun writing it :-)
 
 I've had my OS X configured to switch desktop backgrounds every 15
 minutes. The images I chose from was a collection of photographs I
