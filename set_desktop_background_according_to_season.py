@@ -1,6 +1,6 @@
 #!/opt/local/bin/python2.7
 # -*- coding: utf-8 -*-
-# Time-stamp: <2013-01-27 18:32:53 vk>
+# Time-stamp: <2013-01-27 19:04:47 vk>
 import re
 import os
 
@@ -8,6 +8,7 @@ import os
 ## TODO:
 ## * fix parts marked with «FIXXME»
 ## * possible for future: command line switch to get images from the opposite season only
+## * possible for future: also match hours of day (+/- 1h; or: +/- that number of hours with a minimum of X matching images)
 
 ## a text file which will be filled (overwritten!) with
 ## the list of possible desktop background files:
