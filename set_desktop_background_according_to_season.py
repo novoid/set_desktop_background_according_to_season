@@ -1,6 +1,6 @@
 #!/opt/local/bin/python2.7
 # -*- coding: utf-8 -*-
-# Time-stamp: <2013-01-27 17:28:55 vk>
+# Time-stamp: <2013-01-27 18:32:53 vk>
 import re
 import os
 
@@ -66,7 +66,7 @@ INVOCATION_TIME = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime())
 
 
 USAGE = u"\n\
-    " + sys.argv[0] + u" -i <inputfile.ics> -o <outputfile.ics>\n\
+    " + sys.argv[0] + u"\n\
 \n\
 This script sets the OS X 10.5 desktop background\n\
 to a randomly chosen image which was taken in a similar\n\
