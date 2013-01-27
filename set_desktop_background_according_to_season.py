@@ -1,6 +1,6 @@
 #!/opt/local/bin/python2.7
 # -*- coding: utf-8 -*-
-# Time-stamp: <2013-01-27 19:04:47 vk>
+# Time-stamp: <2013-01-27 19:11:31 vk>
 import re
 import os
 
@@ -23,19 +23,18 @@ IDLE_TIME_BORDER = 20
 ## Usually, the set of imagefiles does not change this quickly. So within the
 ## given period (in hours), re-use the previously generated file in order to
 ## spare some unnecessary load.
-REGENERATE_FILE_WITH_IMAGEFILES_NOT_WITHIN = 4
+REGENERATE_FILE_WITH_IMAGEFILES_NOT_WITHIN = 24
 
 ## include files matching following regular expression
 INCLUDE_FILES_REGEX = re.compile("([12]\d\d\d)-([012345]\d)-([012345]\d).*(specialL|\(desktoppicture\)|\(dp\)).*\.(jpg|jpeg)$")
 
 ## exclude all files located in folders matching following regular expression
-EXCLUDE_FOLDERS_REGEX = re.compile(".*(desktop_backgrounds|Library).*")
+EXCLUDE_FOLDERS_REGEX = re.compile(".*(foobar|Library).*")
 
 ## list of starting folders to query for matching files:
 home_folder = os.path.expanduser("~")
 LIST_OF_PATHS_TO_QUERY = [
     os.path.join(home_folder, 'archive/events_memories'),
-#    os.path.join(home_folder, 'archive/events_memories/2013'),
     os.path.join(home_folder, 'art'),
     ]
 
