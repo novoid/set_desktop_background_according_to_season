@@ -1,0 +1,120 @@
+## Time-stamp: <2013-01-27 17:25:20 vk>
+## -*- coding: utf-8 -*-
+## This file is best viewed with GNU Emacs Org-mode: http://orgmode.org/
+
+* set_desktop_background_according_to_season.py
+
+This Python script sets your desktop background image according to
+the current season.
+
+*DISCLAINER:* This is a works-for-me-solution which is adopted to my
+work flows and my computer. It works on a Mac OS X 10.5 with Python
+2.7 ( from [[https://www.macports.org/][MacPorts]]) and some tools installed form [[https://www.macports.org/][MacPorts]]. Sorry,
+you have to go through the whole script in order to modify it that it
+meets your situation.
+
+What it does:
+
+1. get system idle time
+   - using shell script with ioreg
+2. if idle time is less than IDLE_TIME_BORDER minutes continue (else exit)
+3. re-generate FILE_WITH_IMAGEFILES if it is older than
+   REGENERATE_FILE_WITH_IMAGEFILES_NOT_WITHIN hours
+4. determine current month
+5. read-in FILE_WITH_IMAGEFILES from LIST_OF_PATHS_TO_QUERY and parse
+   for ISO timestamps in filenames
+6. randomly choose a file with matching month from the list
+   - use +/- one month as period to match season
+7. set this file as new desktop background
+
+** Why
+
+Let's face it: This is nothing most people spend a thought on. I did
+it because I can :-)
+
+I've had my OS X configured to switch desktop backgrounds every 15
+minutes. The images I chose from was a collection of photographs I
+took with special tags in their file name: "(desktoppicture)" or
+"(dp)" or "specialL".
+
+This way, I get a nice slide show on cool moments I took a photo.
+
+Imagine a hot summer day and imagine that you get christmas
+photographs as background images. Not quite matching in my opinion.
+
+How about desktop backgrounds that match the current season?
+
+My photographs contain a time stamp:
+"2003-09-09T14.58 green hills and blue sky - very nice (desktoppicture).jpg"
+
+It is very easy to match seasons by looking for file name whose time
+stamp is similar to the current month (+/- one month).
+
+So this is it.
+
+
+* Periodically running this script 
+
+On my OS X 10.5 there is no crond, unfortunately. Instead, I have to
+use LaunchD.
+
+create a file like "~/Library/LaunchAgents/switchdesktopbackground.plist"
+
+: <?xml version="1.0" encoding="UTF-8"?>
+: <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+: <plist version="1.0">
+: <dict>
+:         <key>Label</key>
+:         <string>switchdesktopbackground.plist</string>
+:         <key>UserName</key>
+:         <string>vk</string>
+:         <key>ProgramArguments</key>
+:         <array>
+:                 <string>/Users/vk/bin/set_desktop_background_according_to_season.py</string>
+:                 <string>--quiet</string>
+:         </array>
+:         <key>StartInterval</key>
+:         <integer>937</integer>
+: </dict>
+: </plist>
+
+Append the script to the running LaunchD server using:
+: launchctl load ~/Library/LaunchAgents/switchdesktopbackground.plist
+
+After a re-boot, the agent should be started automatically. Although
+on my system, this does not work each time :-O
+
+* Using appscript
+
+I had to install appscript using:
+: cd /opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin
+: sudo ./easy_install appscript
+
+You can check the basic appscript functionality to set desktop
+backgrounds with:
+
+#+BEGIN_SRC python
+from appscript import *
+
+f = '/Users/username/images/2012-02-18T11.17.52_img_2153.jpg'
+se = app('System Events')
+desktops = se.desktops.display_name.get()
+for d in desktops:
+    desk = se.desktops[its.display_name == d]
+    desk.picture.set(mactypes.File(f))
+#+END_SRC
+
+* Contribute!
+
+I am looking for your ideas!
+
+If you want to contribute to this cool project, please fork and
+contribute!
+
+
+* Local Variables                                                  :noexport:
+# Local Variables:
+# mode: auto-fill
+# mode: flyspell
+# eval: (ispell-change-dictionary "en_US")
+# End:
