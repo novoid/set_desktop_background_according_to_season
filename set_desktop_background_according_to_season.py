@@ -139,7 +139,8 @@ def get_idle_seconds():
             break
 
     nano_seconds = long(raw_line.split('=')[-1])
-    seconds = nano_seconds/10**9
+    seconds = nano_seconds/1000000000
+    logging.debug("idle time is %s seconds (%s ns)" % (seconds, nano_seconds))
     return seconds
 
 
@@ -147,7 +148,7 @@ def exit_if_idle_time_is_too_high():
     """exit with errorcode 0 if system idle time is below the
     threshold minutes stored in IDLE_TIME_BORDER"""
 
-    currentidleminutes = get_idle_seconds()*60
+    currentidleminutes = get_idle_seconds()/60
 
     if currentidleminutes > int(IDLE_TIME_BORDER):
         logging.debug("idle time (%s minutes) is too big for me; doing nothing." % \
@@ -232,7 +233,7 @@ def parse_desktop_background_files():
     according to current_month."""
 
     month = datetime.datetime.now().strftime("%m")
-    logging.debug("current month: [%s]" % month)
+    #logging.debug("current month: [%s]" % month)
 
     all_image_files = []
     count=0
@@ -252,7 +253,7 @@ def parse_desktop_background_files():
             if difference_in_months<2 or difference_in_months==11:
                 all_image_files.append(line)
 
-    logging.info("found %s seasonal matching files (within %s image files)" % (
+    logging.debug("found %s seasonal matching files (within %s image files)" % (
             str(len(all_image_files)),
             str(count)
             ))
