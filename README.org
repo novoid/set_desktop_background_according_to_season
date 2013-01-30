@@ -1,4 +1,4 @@
-## Time-stamp: <2013-01-27 17:33:20 vk>
+## Time-stamp: <2013-01-30 11:33:44 vk>
 ## -*- coding: utf-8 -*-
 ## This file is best viewed with GNU Emacs Org-mode: http://orgmode.org/
 
@@ -20,12 +20,12 @@ What it does:
 - if idle time is less than IDLE_TIME_BORDER minutes continue (else exit)
 - re-generate FILE_WITH_IMAGEFILES if it is older than
   REGENERATE_FILE_WITH_IMAGEFILES_NOT_WITHIN hours
-- determine current month
+- *determine current month*
 - read-in FILE_WITH_IMAGEFILES from LIST_OF_PATHS_TO_QUERY and parse
   for ISO timestamps in filenames
-- randomly choose a file with matching month from the list
-  - use +/- one month as period to match season
-- set this file as new desktop background
+- *randomly choose a file* with matching month from the list
+  - use *current or next month* as period to match season
+- *set this file as new desktop background*
 
 ** Why
 

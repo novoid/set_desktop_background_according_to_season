@@ -1,6 +1,6 @@
 #!/opt/local/bin/python2.7
 # -*- coding: utf-8 -*-
-# Time-stamp: <2013-01-27 19:11:31 vk>
+# Time-stamp: <2013-01-30 11:26:26 vk>
 import re
 import os
 
@@ -144,14 +144,14 @@ def get_idle_seconds():
     return seconds
 
 
-def exit_if_idle_time_is_too_high():
+def exit_if_idle_time_is_too_large():
     """exit with errorcode 0 if system idle time is below the
     threshold minutes stored in IDLE_TIME_BORDER"""
 
     currentidleminutes = get_idle_seconds()/60
 
     if currentidleminutes > int(IDLE_TIME_BORDER):
-        logging.debug("idle time (%s minutes) is too big for me; doing nothing." % \
+        logging.debug("idle time (%s minutes) is too large for me; doing nothing." % \
                           str(currentidleminutes))
         sys.exit(0)
 
@@ -228,18 +228,37 @@ def regenerate_file_list_with_desktop_background_files(FILE_WITH_IMAGEFILES):
             output.write(line + '\n')
 
 
-def parse_desktop_background_files():
+def check_if_image_month_matches_season_criteria(current_month, image_month):
+    """Returns True if the month of the image is the current one or
+    the one after the current one."""
+
+    ## previous criteria: image_month is within previous month to next month:
+    ##difference_in_months = int(components.group(2)) - int(current_month)
+    ##difference_in_months<2 or difference_in_months==11:
+    ## ... BUT: xmas-photos in Jannuary seem odd to me
+
+    if current_month==12:
+        next_month = 1
+    else:
+        next_month = current_month+1
+
+    return( image_month==current_month or image_month==next_month )
+
+
+def parse_and_filter_desktop_background_files():
     """read in FILE_WITH_IMAGEFILES and search for matching files
     according to current_month."""
 
-    month = datetime.datetime.now().strftime("%m")
-    #logging.debug("current month: [%s]" % month)
+    current_month = datetime.datetime.now().strftime("%m")
+    #logging.debug("current month: [%s]" % current_month)
 
     all_image_files = []
     count=0
 
     with open(FILE_WITH_IMAGEFILES, 'r') as file_with_imagefiles:
+
         for line in file_with_imagefiles:
+
             count +=1
             filename = os.path.basename(line)
             components = re.match(INCLUDE_FILES_REGEX, filename)
@@ -249,8 +268,8 @@ def parse_desktop_background_files():
                                filename + \
                                "\ is not matched by INCLUDE_FILES_REGEX!")
 
-            difference_in_months = int(components.group(2)) - int(month)
-            if difference_in_months<2 or difference_in_months==11:
+            image_month = components.group(2)
+            if check_if_image_month_matches_season_criteria(int(current_month), int(image_month))
                 all_image_files.append(line)
 
     logging.debug("found %s seasonal matching files (within %s image files)" % (
@@ -289,7 +308,7 @@ def main():
 
     ## 1. get system idle time
     if not options.force and not options.ignoreidle:
-        exit_if_idle_time_is_too_high()
+        exit_if_idle_time_is_too_large()
     ## 2. if idle time < IDLE_TIME_BORDER minutes continue (else exit)
 
     ## 3. re-generate files_for_desktop_background.txt
@@ -298,7 +317,7 @@ def main():
       ## 4. determine current month
   ## 5. read-in files_for_desktop_background.txt and parse for ISO
     ##    timestamps in filenames
-    all_image_files = parse_desktop_background_files()
+    all_image_files = parse_and_filter_desktop_background_files()
 
     ## 6. randomly choose a file with matching month from the list
         ## FIXXME: prevent same file picked twice without any other file in between?
