@@ -1,6 +1,6 @@
 #!/opt/local/bin/python2.7
 # -*- coding: utf-8 -*-
-# Time-stamp: <2013-01-30 11:26:26 vk>
+# Time-stamp: <2013-01-30 16:20:29 vk>
 import re
 import os
 
@@ -74,6 +74,7 @@ season to the current one.\n\
 \n\
 Please refer to README.org for further details.\n\
 \n\
+https://github.com/novoid/set_desktop_background_according_to_season\n\
 \n\
 :copyright: (c) 2013 by Karl Voit <tools@Karl-Voit.at>\n\
 :license: GPL v3 or any later version\n\

@@ -1,4 +1,4 @@
-## Time-stamp: <2013-01-30 11:33:44 vk>
+## Time-stamp: <2013-01-30 16:20:40 vk>
 ## -*- coding: utf-8 -*-
 ## This file is best viewed with GNU Emacs Org-mode: http://orgmode.org/
 
@@ -26,6 +26,8 @@ What it does:
 - *randomly choose a file* with matching month from the list
   - use *current or next month* as period to match season
 - *set this file as new desktop background*
+
+Source: https://github.com/novoid/set_desktop_background_according_to_season
 
 ** Why
 
