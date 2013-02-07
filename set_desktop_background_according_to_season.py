@@ -1,6 +1,6 @@
 #!/opt/local/bin/python2.7
 # -*- coding: utf-8 -*-
-# Time-stamp: <2013-01-30 16:20:29 vk>
+# Time-stamp: <2013-02-07 13:58:01 vk>
 import re
 import os
 
@@ -35,8 +35,7 @@ EXCLUDE_FOLDERS_REGEX = re.compile(".*(foobar|Library).*")
 home_folder = os.path.expanduser("~")
 LIST_OF_PATHS_TO_QUERY = [
     os.path.join(home_folder, 'archive/events_memories'),
-    os.path.join(home_folder, 'art'),
-    ]
+    os.path.join(home_folder, 'art')]
 
 
 ## ===================================================================== ##
@@ -52,7 +51,6 @@ import datetime
 import logging
 from subprocess import *
 from optparse import OptionParser
-import fnmatch
 from random import choice
 from appscript import *
 
@@ -62,8 +60,6 @@ from appscript import *
 PROG_VERSION_NUMBER = u"0.1"
 PROG_VERSION_DATE = u"2013-01-27"
 INVOCATION_TIME = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime())
-
-
 
 USAGE = u"\n\
     " + sys.argv[0] + u"\n\
@@ -79,7 +75,7 @@ https://github.com/novoid/set_desktop_background_according_to_season\n\
 :copyright: (c) 2013 by Karl Voit <tools@Karl-Voit.at>\n\
 :license: GPL v3 or any later version\n\
 :bugreports: <tools@Karl-Voit.at>\n\
-:version: "+PROG_VERSION_NUMBER+" from "+PROG_VERSION_DATE+"\n"
+:version: " + PROG_VERSION_NUMBER + " from " + PROG_VERSION_DATE + "\n"
 
 parser = OptionParser(usage=USAGE)
 
@@ -130,7 +126,7 @@ def get_idle_seconds():
 
     # Get the output from
     # ioreg -c IOHIDSystem
-    output  = Popen(["ioreg", "-c", "IOHIDSystem"], stdout=PIPE).communicate()[0]
+    output = Popen(["ioreg", "-c", "IOHIDSystem"], stdout=PIPE).communicate()[0]
     lines = output.split('\n')
 
     raw_line = ''
@@ -140,7 +136,7 @@ def get_idle_seconds():
             break
 
     nano_seconds = long(raw_line.split('=')[-1])
-    seconds = nano_seconds/1000000000
+    seconds = nano_seconds / 1000000000
     logging.debug("idle time is %s seconds (%s ns)" % (seconds, nano_seconds))
     return seconds
 
@@ -149,11 +145,10 @@ def exit_if_idle_time_is_too_large():
     """exit with errorcode 0 if system idle time is below the
     threshold minutes stored in IDLE_TIME_BORDER"""
 
-    currentidleminutes = get_idle_seconds()/60
+    currentidleminutes = get_idle_seconds() / 60
 
     if currentidleminutes > int(IDLE_TIME_BORDER):
-        logging.debug("idle time (%s minutes) is too large for me; doing nothing." % \
-                          str(currentidleminutes))
+        logging.debug("idle time (%s minutes) is too large for me; doing nothing." % str(currentidleminutes))
         sys.exit(0)
 
     return True
@@ -197,7 +192,7 @@ def regenerate_file_list_with_desktop_background_files(FILE_WITH_IMAGEFILES):
     if os.path.exists(FILE_WITH_IMAGEFILES):
         file_with_imagefiles_mtime = os.path.getmtime(FILE_WITH_IMAGEFILES)
         unix_epoch_now = time.time()
-        difference_in_hours = int((unix_epoch_now - file_with_imagefiles_mtime)/(60*60))
+        difference_in_hours = int((unix_epoch_now - file_with_imagefiles_mtime) / (60 * 60))
 
         logging.debug("FILE_WITH_IMAGEFILES is %s hours old" % str(difference_in_hours))
 
@@ -215,12 +210,12 @@ def regenerate_file_list_with_desktop_background_files(FILE_WITH_IMAGEFILES):
     for folder in LIST_OF_PATHS_TO_QUERY:
         found_files_before = len(list_of_files_found)
         list_of_files_found = query_folder(folder, list_of_files_found)
-        logging.debug("found files before [%s]; len of list [%s] after folder [%s]" % \
-                          (str(found_files_before), str(len(list_of_files_found)), folder))
-        logging.info("found %s matching files in \"%s\"" % \
-                          (str(len(list_of_files_found) - found_files_before),
-                           str(folder))
-                      )
+        logging.debug("found files before [%s]; len of list [%s] after folder [%s]" %
+                      (str(found_files_before), str(len(list_of_files_found)), folder))
+        logging.info("found %s matching files in \"%s\"" %
+                     (str(len(list_of_files_found) - found_files_before),
+                      str(folder))
+                     )
 
     logging.info("found %s matching files in total" % str(len(list_of_files_found)))
 
@@ -238,12 +233,12 @@ def check_if_image_month_matches_season_criteria(current_month, image_month):
     ##difference_in_months<2 or difference_in_months==11:
     ## ... BUT: xmas-photos in Jannuary seem odd to me
 
-    if current_month==12:
+    if current_month == 12:
         next_month = 1
     else:
-        next_month = current_month+1
+        next_month = current_month + 1
 
-    return( image_month==current_month or image_month==next_month )
+    return(image_month == current_month or image_month == next_month)
 
 
 def parse_and_filter_desktop_background_files():
@@ -254,29 +249,29 @@ def parse_and_filter_desktop_background_files():
     #logging.debug("current month: [%s]" % current_month)
 
     all_image_files = []
-    count=0
+    count = 0
 
     with open(FILE_WITH_IMAGEFILES, 'r') as file_with_imagefiles:
 
         for line in file_with_imagefiles:
 
-            count +=1
+            count += 1
             filename = os.path.basename(line)
             components = re.match(INCLUDE_FILES_REGEX, filename)
 
             if not components:
-                error_exit(10,"ERROR: This should not happen: filename \"" + \
-                               filename + \
-                               "\ is not matched by INCLUDE_FILES_REGEX!")
+                error_exit(10, "ERROR: This should not happen: filename \"" +
+                           filename +
+                           "\ is not matched by INCLUDE_FILES_REGEX!")
 
             image_month = components.group(2)
-            if check_if_image_month_matches_season_criteria(int(current_month), int(image_month))
+            if check_if_image_month_matches_season_criteria(int(current_month), int(image_month)):
                 all_image_files.append(line)
 
-    logging.debug("found %s seasonal matching files (within %s image files)" % (
-            str(len(all_image_files)),
-            str(count)
-            ))
+    logging.debug("found %s seasonal matching files (within %s image files)" %
+                  (str(len(all_image_files)),
+                   str(count)
+                   ))
 
     return all_image_files
 
@@ -304,8 +299,8 @@ def main():
     handle_logging()
 
     if options.verbose and options.quiet:
-        error_exit(1,"Options \"--verbose\" and \"--quiet\" found. " + \
-                       "This does not make any sense, you silly fool :-)")
+        error_exit(1, "Options \"--verbose\" and \"--quiet\" found. " +
+                   "This does not make any sense, you silly fool :-)")
 
     ## 1. get system idle time
     if not options.force and not options.ignoreidle:
