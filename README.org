@@ -1,4 +1,4 @@
-## Time-stamp: <2013-01-30 16:20:40 vk>
+## Time-stamp: <2013-03-01 14:06:08 vk>
 ## -*- coding: utf-8 -*-
 ## This file is best viewed with GNU Emacs Org-mode: http://orgmode.org/
 
@@ -28,6 +28,12 @@ What it does:
 - *set this file as new desktop background*
 
 Source: https://github.com/novoid/set_desktop_background_according_to_season
+
+- *target group*: Users of OS X who want to get more control over the
+  selection of the desktop background images used
+- *skills necessary*:
+  - create scheduled execution of commands (LaunchD)
+  - modifying settings in a Python script file
 
 ** Why
 
