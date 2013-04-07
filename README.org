@@ -1,4 +1,4 @@
-## Time-stamp: <2013-03-01 14:06:08 vk>
+## Time-stamp: <2013-04-07 18:33:48 vk>
 ## -*- coding: utf-8 -*-
 ## This file is best viewed with GNU Emacs Org-mode: http://orgmode.org/
 
@@ -91,6 +91,19 @@ Append the script to the running LaunchD server using:
 
 After a re-boot, the agent should be started automatically. Although
 on my system, this does not work each time :-O
+
+* How to open the current desktop image
+
+Sometimes, it is quite handy to open the current desktop image shown
+in your favorite image viewer.
+
+You can achieve this easily by using the "--openscript=FILE" feature:
+
+: set_desktop_background_according_to_season.py --openscript=~/Desktop/open-background.sh
+
+To display the current desktop image, use the following command:
+
+: sh ~/Desktop/open-background.sh
 
 * Using appscript
 
