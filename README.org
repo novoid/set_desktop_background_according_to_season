@@ -1,4 +1,4 @@
-## Time-stamp: <2013-04-07 18:33:48 vk>
+## Time-stamp: <2013-04-10 14:58:55 vk>
 ## -*- coding: utf-8 -*-
 ## This file is best viewed with GNU Emacs Org-mode: http://orgmode.org/
 
@@ -20,11 +20,10 @@ What it does:
 - if idle time is less than IDLE_TIME_BORDER minutes continue (else exit)
 - re-generate FILE_WITH_IMAGEFILES if it is older than
   REGENERATE_FILE_WITH_IMAGEFILES_NOT_WITHIN hours
-- *determine current month*
 - read-in FILE_WITH_IMAGEFILES from LIST_OF_PATHS_TO_QUERY and parse
   for ISO timestamps in filenames
-- *randomly choose a file* with matching month from the list
-  - use *current or next month* as period to match season
+- *randomly choose a file* which has a day (ignoring year) that is
+  within ~days-before~ and ~days-after~ (parameters) of today.
 - *set this file as new desktop background*
 
 Source: https://github.com/novoid/set_desktop_background_according_to_season
@@ -56,7 +55,7 @@ My photographs contain a time stamp:
 "2003-09-09T14.58 green hills and blue sky - very nice (desktoppicture).jpg"
 
 It is very easy to match seasons by looking for file name whose time
-stamp is similar to the current month (+/- one month).
+stamp is similar to the current season (+/- one month if you want).
 
 So this is it.
 
@@ -79,6 +78,8 @@ create a file like "~/Library/LaunchAgents/switchdesktopbackground.plist"
 :         <key>ProgramArguments</key>
 :         <array>
 :                 <string>/Users/vk/bin/set_desktop_background_according_to_season.py</string>
+:                 <string>--days-after 10</string>
+:                 <string>--days-before 30</string>
 :                 <string>--quiet</string>
 :         </array>
 :         <key>StartInterval</key>
@@ -99,7 +100,7 @@ in your favorite image viewer.
 
 You can achieve this easily by using the "--openscript=FILE" feature:
 
-: set_desktop_background_according_to_season.py --openscript=~/Desktop/open-background.sh
+: set_desktop_background_according_to_season.py --openscript=~/Desktop/open-background.sh -a 10 -b 30
 
 To display the current desktop image, use the following command:
 
