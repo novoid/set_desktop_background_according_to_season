@@ -1,6 +1,6 @@
 #!/opt/local/bin/python2.7
 # -*- coding: utf-8 -*-
-# Time-stamp: <2013-04-10 14:52:45 vk>
+# Time-stamp: <2013-05-21 11:57:22 vk>
 import re
 import os
 
@@ -59,7 +59,7 @@ from appscript import *
 
 PROG_VERSION_NUMBER = u"0.2"
 PROG_VERSION_DATE = u"2013-03-10"
-INVOCATION_TIME = time.strftime("%Y-%m-%dT%H:%M:%S", time.gmtime())
+INVOCATION_TIME = time.strftime("%Y-%m-%dT%H:%M:%S", time.localtime())
 
 USAGE = u"\n\
     " + sys.argv[0] + u"\n\
