@@ -1,5 +1,5 @@
-## Time-stamp: <2013-04-10 14:58:55 vk>
-## -*- coding: utf-8 -*-
+## -*- mode: org; coding: utf-8 -*-
+## Time-stamp: <2014-08-29 16:28:55 vk>
 ## This file is best viewed with GNU Emacs Org-mode: http://orgmode.org/
 
 * set_desktop_background_according_to_season.py
@@ -53,6 +53,9 @@ How about desktop backgrounds that match the current season?
 
 My photographs contain a time stamp:
 "2003-09-09T14.58 green hills and blue sky - very nice (desktoppicture).jpg"
+
+Please do read [[http://karl-voit.at/managing-digital-photographs][this blog article]] if you want to know more on how I
+manage my digital photographs using very simple things.
 
 It is very easy to match seasons by looking for file name whose time
 stamp is similar to the current season (+/- one month if you want).
